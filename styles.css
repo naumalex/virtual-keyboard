@@ -1,0 +1,53 @@
+.keyboard {
+  display: flex;  
+  flex-wrap: wrap;
+  width: 740px;
+  gap: 5px;
+}
+
+.keyboard-display {
+  width: 735px;
+  height: 200px;
+}
+
+.default-key {
+  width: 40px;
+}
+
+.key {
+  border: 1px solid;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-weight: 550;
+}
+
+.back-tick-key {
+  width: 30px;
+}
+
+.tab-key {
+  width: 60px;
+}
+
+.backspace-key, 
+.del-key,
+.enter-key,
+.right-shift-key,
+.space-key {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.enter-key,
+.right-shift-key {
+  min-width: 80px;
+}
+
+.capslock-key {
+  width: 78px;
+}
+
+.left-shift-key {
+  width: 78px;
+}
