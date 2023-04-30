@@ -87,19 +87,17 @@ class Keyboard {
     document.body.append(element);
   }
 
-  renderPressedKey(code, isCapsLockOn, isShiftPressed) {
+  renderPressedKey(code, isShiftPressed) {
     const element = this.getDisplayArea();
     if (code === 'Backspace') {
       element.textContent = element.textContent.slice(0, -1);
       return;
     }
-
     if (code === 'Delete') {
       element.textContent = element.textContent.slice(0, element.selectionStart)
       + element.textContent.slice(element.selectionEnd);
       return;
     }
-
     const keyItem = this.keysList.find((key) => key.code === code);
     const keyVisualRepresentation = (new Key(
       keyItem.key,
@@ -107,7 +105,7 @@ class Keyboard {
       keyItem.otherLangKey,
       this.language,
     ))
-      .getVisualPresentation(isCapsLockOn, isShiftPressed);
+      .getVisualPresentation(this.isCapsLockOn(), isShiftPressed);
     element.textContent += keyVisualRepresentation;
   }
 
@@ -115,14 +113,22 @@ class Keyboard {
     return document.querySelector('.keyboard-display');
   }
 
+  getKeyboardElement() {
+    return document.querySelector('.keyboard');
+  }
+
   getKeyDomElementByEventCode(eventCode) {
     return document.querySelector(`.${eventCode}`);
   }
 
-  toggleKeyActiveStatus(keyCode, isTemporaryActive) {
+  toggleKeyActiveStatus(keyCode) {
+    let isTemporaryChange = true;
+    if (keyCode === 'CapsLock') {
+      isTemporaryChange = false;
+    }
     const element = this.getKeyDomElementByEventCode(keyCode);
     element.classList.toggle('active');
-    if (isTemporaryActive) {
+    if (isTemporaryChange) {
       setTimeout((activeKey) => activeKey.classList.toggle('active'), 500, element);
     }
   }
@@ -148,15 +154,8 @@ keyboard.render();
 
 const addKeyDownEventHandler = function () {
   document.addEventListener('keydown', (event) => {
-    let isTemporaryChange = true;
-    // let isCapsLockOn = event.getModifierState('CapsLock');
-    const isCapsLockOn = keyboard.isCapsLockOn();
-    keyboard.renderPressedKey(event.code, isCapsLockOn, event.shiftKey);
-
-    if (event.code === 'CapsLock') {
-      isTemporaryChange = false;
-    }
-    keyboard.toggleKeyActiveStatus(event.code, isTemporaryChange);
+    keyboard.renderPressedKey(event.code, event.shiftKey);
+    keyboard.toggleKeyActiveStatus(event.code);
     if (event.altKey && event.ctrlKey) {
       keyboard.switchlanguage();
     }
@@ -166,6 +165,17 @@ const addKeyDownEventHandler = function () {
   });
 };
 
+const mouseClickEventHandler = function (event) {
+  let keyCode = event.target.classList[1];
+    keyboard.renderPressedKey(keyCode, event.shiftKey);
+    keyboard.toggleKeyActiveStatus(keyCode);
+}
+
+const addMouseClickEventHandler = function () {
+  keyboard.getKeyboardElement().addEventListener('click', mouseClickEventHandler);
+}
+
 window.onload = function () {
   addKeyDownEventHandler();
+  addMouseClickEventHandler();
 };

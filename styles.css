@@ -21,10 +21,16 @@
   min-width: 40px;
 }
 
-.key.active {
+.key.active,
+.key:hover {
   background-color: orange;
   transition: background-color, 1s;
 }
+
+.key:hover {
+  cursor: pointer;
+}
+
 .BackQuote {
   width: 30px;
 }
