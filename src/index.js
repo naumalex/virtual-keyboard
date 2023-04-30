@@ -84,8 +84,8 @@ class Keyboard {
     return document.querySelector('.keyboard-display');
   }
 
-  getKeyDomElementByEventKey(eventKey) {
-    return Array.from(document.querySelectorAll('.keyboard .key')).filter((element) => element.textContent === eventKey).shift();
+  getKeyDomElementByEventCode(eventCode) {
+    return document.querySelector(`.${eventCode}`);
   }
 }
 
@@ -95,13 +95,15 @@ keyboard.render();
 const addKeyDownEventHandler = function () {
   document.addEventListener('keydown', (event) => {
     keyboard.renderPressedKey(event.key);
-    keyboard.getKeyDomElementByEventKey(event.key);
     if (event.key === 'Tab') {
       event.preventDefault();
     }
+    const element = keyboard.getKeyDomElementByEventCode(event.code);
+    element.classList.toggle('active');
+    setTimeout((activeKey) => activeKey.classList.toggle('active'), 500, element);
   });
 };
 
-window.onload = function (e) {
+window.onload = function () {
   addKeyDownEventHandler();
 };

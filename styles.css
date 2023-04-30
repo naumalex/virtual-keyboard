@@ -21,6 +21,10 @@
   min-width: 40px;
 }
 
+.key.active {
+  background-color: orange;
+  transition: background-color, 1s;
+}
 .BackQuote {
   width: 30px;
 }
