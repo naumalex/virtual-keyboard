@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   width: 740px;
   gap: 5px;
+  tab-size: 7;
 }
 
 .keyboard-display {
