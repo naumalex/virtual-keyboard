@@ -1,40 +1,53 @@
 class Key {
-  constructor(eventKey, isShift) {
-    this.eventKey = eventKey;
-    this.isShift = isShift;
+  constructor(key, code) {
+    this.key = key;
+    this.code = code;
   }
 
   getVisualPresentation() {
     const keys = { Tab: '\t' };
-    return keys[this.eventKey] || this.eventKey;
+    return keys[this.key] || this.key;
+  }
+
+  render() {
+    return `<div class='key ${this.code}'>${this.key}</div>`;
   }
 }
 
 class Keyboard {
   constructor() {
-    this.keysList = [{ key: '`', class: 'back-tick-key' }, { key: '1', class: 'default-key' },
-      { key: '2', class: 'default-key' }, { key: '3', class: 'default-key' }, { key: '4', class: 'default-key' },
-      { key: '5', class: 'default-key' }, { key: '6', class: 'default-key' }, { key: '7', class: 'default-key' },
-      { key: '8', class: 'default-key' }, { key: '9', class: 'default-key' }, { key: '0', class: 'default-key' },
-      { key: '-', class: 'default-key' }, { key: '=', class: 'default-key' }, { key: 'Backspace', class: 'backspace-key highlighted' },
-      { key: 'Tab', class: 'tab-key' }, { key: 'q', class: 'default-key' }, { key: 'w', class: 'default-key' },
-      { key: 'e', class: 'default-key' }, { key: 'r', class: 'default-key' }, { key: 't', class: 'default-key' },
-      { key: 'y', class: 'default-key' }, { key: 'u', class: 'default-key' }, { key: 'i', class: 'default-key' },
-      { key: 'o', class: 'default-key' }, { key: 'p', class: 'default-key' }, { key: '[', class: 'default-key' },
-      { key: ']', class: 'default-key' }, { key: '\\', class: 'default-key' }, { key: 'Del', class: 'del-key' },
-      { key: 'CapsLock', class: 'capslock-key' }, { key: 'a', class: 'default-key' }, { key: 's', class: 'default-key' },
-      { key: 'd', class: 'default-key' }, { key: 'f', class: 'default-key' }, { key: 'g, ', class: 'default-key' },
-      { key: 'h', class: 'default-key' }, { key: 'j', class: 'default-key' }, { key: 'k', class: 'default-key' },
-      { key: 'l', class: 'default-key' }, { key: ';', class: 'default-key' }, { key: "'", class: 'default-key' },
-      { key: 'Enter', class: 'enter-key' }, { key: 'Shift', class: 'left-shift-key' },
-      { key: 'z', class: 'default-key' }, { key: 'x', class: 'default-key' }, { key: 'c', class: 'default-key' },
-      { key: 'v', class: 'default-key' }, { key: 'v', class: 'default-key' }, { key: 'b', class: 'default-key' },
-      { key: 'n', class: 'default-key' }, { key: 'm', class: 'default-key' }, { key: ',', class: 'default-key' },
-      { key: '.', class: 'default-key' }, { key: '/', class: 'default-key' }, { key: '&#9650', class: 'default-key' },
-      { key: 'Shift', class: 'right-shift-key' }, { key: 'Ctrl', class: 'default-key' }, { key: 'Win', class: 'default-key' },
-      { key: 'Alt', class: 'default-key' }, { key: ' ', class: 'space-key' }, { key: 'Alt', class: 'default-key' },
-      { key: '&#9664', class: 'default-key' }, { key: '&#9660', class: 'default-key' }, { key: '&#9658', class: 'default-key' },
-      { key: 'Ctrl', class: 'default-key' }];
+    this.keysList = [
+      { key: '`', code: 'BackQuote' }, { key: '1', code: 'Digit1' },
+      { key: '2', code: 'Digit2' }, { key: '3', code: 'Digit3' },
+      { key: '4', code: 'Digit4' }, { key: '5', code: 'Digit5' },
+      { key: '6', code: 'Digit6' }, { key: '7', code: 'Digit7' },
+      { key: '8', code: 'Digit8' }, { key: '9', code: 'Digit9' },
+      { key: '0', code: 'Digit0' }, { key: '-', code: 'Minus' },
+      { key: '=', code: 'Equal' }, { key: 'Backspace', code: 'Backspace' },
+      { key: 'Tab', code: 'Tab' }, { key: 'q', code: 'KeyQ' },
+      { key: 'w', code: 'KeyW' }, { key: 'e', code: 'KeyE' },
+      { key: 'r', code: 'KeyR' }, { key: 't', code: 'KeyT' },
+      { key: 'y', code: 'KeyY' }, { key: 'u', code: 'KeyU' },
+      { key: 'i', code: 'KeyI' }, { key: 'o', code: 'KeyO' },
+      { key: 'p', code: 'KeyP' }, { key: '[', code: 'BracketLeft' },
+      { key: ']', code: 'BracketRight' }, { key: '\\', code: 'BackSlash' },
+      { key: 'Del', code: 'Delete', class: 'del-key' },
+      { key: 'CapsLock', code: 'CapsLock' }, { key: 'a', code: 'KeyA' },
+      { key: 's', code: 'KeyS' }, { key: 'd', code: 'KeyD' },
+      { key: 'f', code: 'KeyF' }, { key: 'g', code: 'KeyG' },
+      { key: 'h', code: 'KeyH' }, { key: 'j', code: 'KeyJ' },
+      { key: 'k', code: 'KeyK' }, { key: 'l', code: 'KeyL' },
+      { key: ';', code: 'Semicolon' }, { key: "'", code: 'Quote' },
+      { key: 'Enter', code: 'Enter' }, { key: 'Shift', code: 'ShiftLeft' },
+      { key: 'z', code: 'KeyZ' }, { key: 'x', code: 'KeyX' },
+      { key: 'c', code: 'KeyC' }, { key: 'v', code: 'KeyV' }, { key: 'b', code: 'KeyB' },
+      { key: 'n', code: 'KeyN' }, { key: 'm', code: 'KeyM' }, { key: ',', code: 'Comma' },
+      { key: '.', code: 'Period' }, { key: '/', code: 'Slash' },
+      { key: '&#9650', code: 'ArrowUp' }, { key: 'Shift', code: 'ShiftRight' },
+      { key: 'Ctrl', code: 'ControlLeft' }, { key: 'Win', code: 'MetaLeft' },
+      { key: 'Alt', code: 'AltRight' }, { key: ' ', code: 'Space' },
+      { key: 'Alt', code: 'AltLeft' }, { key: '&#9664', code: 'ArrowLeft' }, { key: '&#9660', code: 'ArrowDown' },
+      { key: '&#9658', code: 'ArrowUp' }, { key: 'Ctrl', code: 'ControlRight' }];
   }
 
   render() {
@@ -45,7 +58,7 @@ class Keyboard {
     element = document.createElement('div');
     element.className = 'keyboard';
     let keyboardHtml = '';
-    this.keysList.forEach((key) => { keyboardHtml += `<div class='key ${key.class}'>${key.key}</div>`; });
+    this.keysList.forEach((key) => { keyboardHtml += (new Key(key.key, key.code)).render(); });
     element.innerHTML = keyboardHtml;
     document.body.append(element);
   }
@@ -70,6 +83,10 @@ class Keyboard {
   getDisplayArea() {
     return document.querySelector('.keyboard-display');
   }
+
+  getKeyDomElementByEventKey(eventKey) {
+    return Array.from(document.querySelectorAll('.keyboard .key')).filter((element) => element.textContent === eventKey).shift();
+  }
 }
 
 const keyboard = new Keyboard();
@@ -78,6 +95,7 @@ keyboard.render();
 const addKeyDownEventHandler = function () {
   document.addEventListener('keydown', (event) => {
     keyboard.renderPressedKey(event.key);
+    keyboard.getKeyDomElementByEventKey(event.key);
     if (event.key === 'Tab') {
       event.preventDefault();
     }
