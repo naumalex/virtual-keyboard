@@ -1,0 +1,74 @@
+.keyboard-wrapper {
+  margin: 0 auto;
+  text-align: center;
+  width: 750px;
+}
+
+.keyboard {
+  display: flex;  
+  flex-wrap: wrap;
+  gap: 5px;
+  font-size: smaller;
+  border: 1px solid;
+  padding: 5px;
+}
+
+.keyboard-display {
+  width: 745px;
+  height: 200px;
+  font-size: 24pt;
+}
+
+.key {
+  border: 1px solid;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-weight: 550;
+  min-width: 40px;
+  background-color:#f1f1fb;
+  user-select: none;
+  border-radius: 3px;
+  transition: background-color 0.5s, border-radius 0.5s;
+}
+
+.key:hover {
+  background-color: #dccffb;
+  cursor: pointer;
+}
+
+.key.active
+ {
+  background-color: #0067c0;
+  color: white;
+  border-radius: 50px;
+  transition: background-color 1s, border-radius 1s;
+}
+
+.BackQuote {
+  width: 30px;
+}
+
+.Tab {
+  width: 60px;
+}
+
+.Backspace, 
+.Delete,
+.Enter,
+.ShiftRight,
+.Space {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.Enter,
+.ShiftRight,
+.BackSpace {
+  min-width: 80px;
+}
+
+.CapsLock,
+.ShiftLeft {
+  width: 122px;
+}
