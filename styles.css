@@ -16,6 +16,7 @@
 .keyboard-display {
   width: 745px;
   height: 200px;
+  font-size: 24pt;
 }
 
 .key {
@@ -25,16 +26,23 @@
   line-height: 40px;
   font-weight: 550;
   min-width: 40px;
-}
-
-.key.active,
-.key:hover {
-  background-color: orange;
-  transition: background-color, 1s;
+  background-color:#f1f1fb;
+  user-select: none;
+  border-radius: 3px;
+  transition: background-color 0.5s, border-radius 0.5s;
 }
 
 .key:hover {
+  background-color: #dccffb;
   cursor: pointer;
+}
+
+.key.active
+ {
+  background-color: #0067c0;
+  color: white;
+  border-radius: 50px;
+  transition: background-color 1s, border-radius 1s;
 }
 
 .BackQuote {
@@ -62,5 +70,5 @@
 
 .CapsLock,
 .ShiftLeft {
-  width: 124px;
+  width: 122px;
 }

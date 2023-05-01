@@ -200,7 +200,7 @@ const addKeyDownEventHandler = function () {
     keyboard.renderPressedKey(event.code, event.shiftKey);
     keyboard.hightlightKey(event.code);
     if (event.code === 'CapsLock') {
-      keyboard.switchCapsLock();
+      setTimeout(() => keyboard.switchCapsLock(), 500);
     }
     if (event.altKey && event.ctrlKey) {
       keyboard.switchlanguage();
@@ -219,7 +219,7 @@ const mouseClickEventHandler = function (event) {
   keyboard.renderPressedKey(keyCode, event.shiftKey);
   keyboard.hightlightKey(keyCode);
   if (keyCode === 'CapsLock') {
-    keyboard.switchCapsLock();
+    setTimeout(() => keyboard.switchCapsLock(), 500);
   }
 };
 
