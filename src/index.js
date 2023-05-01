@@ -11,8 +11,22 @@ class Key {
   }
 
   getVisualPresentation(isCapsLockOn, isShiftPressed) {
-    const keys = { Tab: '\t' };
-    let visualPresentation = keys[this.key] || ((this.lang === 'english') || (!this.otherLangKey)) ? this.key : this.otherLangKey;
+    const keys = {
+      Tab: '\t',
+      CapsLock: '',
+      Enter: '\n',
+      Shift: '',
+      Ctrl: '',
+      Win: '',
+      Alt: '',
+    };
+    if (!(keys[this.key] === undefined)) {
+      return keys[this.key];
+    }
+
+    let visualPresentation = ((this.lang === 'english')
+      || (!this.otherLangKey)) ? this.key : this.otherLangKey;
+
     if (this.isShowUpperCase(isCapsLockOn, isShiftPressed)) {
       visualPresentation = visualPresentation.toUpperCase();
     }
@@ -21,7 +35,7 @@ class Key {
 
   render(isCapsLockOn) {
     let key = (this.lang === 'russian') && (this.otherLangKey) ? this.otherLangKey : this.key;
-    //only alpha characters to show uppercase
+    // only alpha characters to show uppercase
     if (this.isShowUpperCase(isCapsLockOn) && this.otherLangKey) {
       key = key.toUpperCase();
     }
@@ -62,16 +76,16 @@ class Keyboard {
       { key: 'b', otherLangKey: 'и', code: 'KeyB' },
       { key: 'n', otherLangKey: 'т', code: 'KeyN' }, { key: 'm', otherLangKey: 'ь', code: 'KeyM' }, { key: ',', otherLangKey: 'б', code: 'Comma' },
       { key: '.', otherLangKey: 'ю', code: 'Period' }, { key: '/', code: 'Slash' },
-      { key: '&#9650', code: 'ArrowUp' }, { key: 'Shift', code: 'ShiftRight' },
+      { key: '&#9650;', code: 'ArrowUp' }, { key: 'Shift', code: 'ShiftRight' },
       { key: 'Ctrl', code: 'ControlLeft' }, { key: 'Win', code: 'MetaLeft' },
       { key: 'Alt', code: 'AltRight' }, { key: ' ', code: 'Space' },
-      { key: 'Alt', code: 'AltLeft' }, { key: '&#9664', code: 'ArrowLeft' },
-      { key: '&#9660', code: 'ArrowDown' }, { key: '&#9658', code: 'ArrowUp' },
+      { key: 'Alt', code: 'AltLeft' }, { key: '&#9664;', code: 'ArrowLeft' },
+      { key: '&#9660;', code: 'ArrowDown' }, { key: '&#9654;', code: 'ArrowRight' },
       { key: 'Ctrl', code: 'ControlRight' }];
   }
 
   render() {
-    let isCapsLockOn = this.isCapsLockOn();
+    const isCapsLockOn = this.isCapsLockOn();
     document.body.innerHTML = '';
     let element = document.createElement('textarea');
     element.className = 'keyboard-display';
@@ -111,7 +125,7 @@ class Keyboard {
       this.language,
     ))
       .getVisualPresentation(this.isCapsLockOn(), isShiftPressed);
-    element.textContent += keyVisualRepresentation;
+    element.innerHTML += keyVisualRepresentation;
   }
 
   getDisplayArea() {
@@ -186,15 +200,14 @@ const mouseClickEventHandler = function (event) {
   if (!event.target.classList.contains('key')) {
     return;
   }
-  let keyCode = event.target.classList[1];
+  const keyCode = event.target.classList[1];
   keyboard.renderPressedKey(keyCode, event.shiftKey);
   keyboard.hightlightKey(keyCode);
-}
+};
 
 const addMouseClickEventHandler = function () {
- // keyboard.getKeyboardElement()
   document.addEventListener('click', mouseClickEventHandler);
-}
+};
 
 window.onload = function () {
   addKeyDownEventHandler();
