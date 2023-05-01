@@ -1,13 +1,20 @@
+.keyboard-wrapper {
+  margin: 0 auto;
+  text-align: center;
+  width: 750px;
+}
+
 .keyboard {
   display: flex;  
   flex-wrap: wrap;
-  width: 740px;
   gap: 5px;
   font-size: smaller;
+  border: 1px solid;
+  padding: 5px;
 }
 
 .keyboard-display {
-  width: 735px;
+  width: 745px;
   height: 200px;
 }
 

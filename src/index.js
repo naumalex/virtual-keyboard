@@ -87,12 +87,18 @@ class Keyboard {
   render() {
     const isCapsLockOn = this.isCapsLockOn();
     document.body.innerHTML = '';
-    let element = document.createElement('textarea');
+    let keyboardWrapperElement = document.createElement('div');
+    keyboardWrapperElement.className = 'keyboard-wrapper';
+    let element = document.createElement('h1');
+    element.className = 'header';
+    element.textContent = 'Virtual keyboard';
+    keyboardWrapperElement.appendChild(element);
+    element = document.createElement('textarea');
     element.className = 'keyboard-display';
     element.readOnly = true;
     element.textContent = sessionStorage.getItem('valueDisplayedInDisplayArea') || '';
     sessionStorage.setItem('valueDisplayedInDisplayArea', '');
-    document.body.append(element);
+    keyboardWrapperElement.appendChild(element);
     element = document.createElement('div');
     element.className = 'keyboard';
     let keyboardHtml = '';
@@ -103,7 +109,16 @@ class Keyboard {
       },
     );
     element.innerHTML = keyboardHtml;
-    document.body.append(element);
+    keyboardWrapperElement.appendChild(element);
+    element = document.createElement('p');
+    element.className = 'notes';
+    element.textContent = 'The keyboard has been created in Windows OS'
+    keyboardWrapperElement.appendChild(element);
+    element = document.createElement('p');
+    element.className = 'notes';
+    element.textContent = 'To switch between languages use Ctrl + Alt';
+    keyboardWrapperElement.appendChild(element);
+    document.body.append(keyboardWrapperElement);
   }
 
   renderPressedKey(code, isShiftPressed) {
