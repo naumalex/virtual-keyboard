@@ -87,7 +87,7 @@ class Keyboard {
   render() {
     const isCapsLockOn = this.isCapsLockOn();
     document.body.innerHTML = '';
-    let keyboardWrapperElement = document.createElement('div');
+    const keyboardWrapperElement = document.createElement('div');
     keyboardWrapperElement.className = 'keyboard-wrapper';
     let element = document.createElement('h1');
     element.className = 'header';
@@ -112,7 +112,7 @@ class Keyboard {
     keyboardWrapperElement.appendChild(element);
     element = document.createElement('p');
     element.className = 'notes';
-    element.textContent = 'The keyboard has been created in Windows OS'
+    element.textContent = 'The keyboard has been created in Windows OS';
     keyboardWrapperElement.appendChild(element);
     element = document.createElement('p');
     element.className = 'notes';
@@ -193,6 +193,7 @@ class Keyboard {
 }
 
 const keyboard = new Keyboard();
+keyboard.language = localStorage.getItem('language') || keyboard.language;
 keyboard.render();
 
 const addKeyDownEventHandler = function () {
@@ -205,7 +206,7 @@ const addKeyDownEventHandler = function () {
     if (event.altKey && event.ctrlKey) {
       keyboard.switchlanguage();
     }
-    if (event.code === 'Tab') {
+    if ((event.code === 'Tab') || (event.code === 'AltLeft') || (event.code === 'AltRight')) {
       event.preventDefault();
     }
   });
@@ -230,4 +231,9 @@ const addMouseClickEventHandler = function () {
 window.onload = function () {
   addKeyDownEventHandler();
   addMouseClickEventHandler();
+};
+
+window.onbeforeunload = function(event)
+{
+  localStorage.setItem('language', keyboard.language);
 };
