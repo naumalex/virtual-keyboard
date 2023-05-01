@@ -203,6 +203,9 @@ const mouseClickEventHandler = function (event) {
   const keyCode = event.target.classList[1];
   keyboard.renderPressedKey(keyCode, event.shiftKey);
   keyboard.hightlightKey(keyCode);
+  if (keyCode === 'CapsLock') {
+    keyboard.switchCapsLock();
+  }
 };
 
 const addMouseClickEventHandler = function () {
