@@ -19,9 +19,13 @@ class Key {
     return visualPresentation;
   }
 
-  render() {
-    const key = (this.lang === 'russian') && (this.otherLangKey) ? this.otherLangKey : this.key;
-    return `<div class='key ${this.code}'>${key.toUpperCase()}</div>`;
+  render(isCapsLockOn) {
+    let key = (this.lang === 'russian') && (this.otherLangKey) ? this.otherLangKey : this.key;
+    //only alpha characters to show uppercase
+    if (this.isShowUpperCase(isCapsLockOn) && this.otherLangKey) {
+      key = key.toUpperCase();
+    }
+    return `<div class='key ${this.code}'>${key}</div>`;
   }
 }
 
@@ -67,6 +71,7 @@ class Keyboard {
   }
 
   render() {
+    let isCapsLockOn = this.isCapsLockOn();
     document.body.innerHTML = '';
     let element = document.createElement('textarea');
     element.className = 'keyboard-display';
@@ -80,7 +85,7 @@ class Keyboard {
     this.keysList.forEach(
       (key) => {
         keyboardHtml += (new Key(key.key, key.code, key.otherLangKey, this.language))
-          .render();
+          .render(isCapsLockOn);
       },
     );
     element.innerHTML = keyboardHtml;
@@ -121,7 +126,7 @@ class Keyboard {
     return document.querySelector(`.${eventCode}`);
   }
 
-  toggleKeyActiveStatus(keyCode) {
+  hightlightKey(keyCode) {
     let isTemporaryChange = true;
     if (keyCode === 'CapsLock') {
       isTemporaryChange = false;
@@ -133,9 +138,18 @@ class Keyboard {
     }
   }
 
+  switchCapsLock() {
+    sessionStorage.setItem('valueDisplayedInDisplayArea', this.getDisplayArea().textContent);
+    const isCapsLockOn = this.isCapsLockOn();
+    this.render();
+    if (isCapsLockOn) {
+      this.hightlightKey('CapsLock');
+    }
+  }
+
   isCapsLockOn() {
     const element = this.getKeyDomElementByEventCode('CapsLock');
-    return element.classList.contains('active');
+    return element && element.classList.contains('active');
   }
 
   switchlanguage() {
@@ -144,7 +158,7 @@ class Keyboard {
     const isCapsLockOn = this.isCapsLockOn();
     this.render();
     if (isCapsLockOn) {
-      this.toggleKeyActiveStatus('CapsLock');
+      this.hightlightKey('CapsLock');
     }
   }
 }
@@ -155,7 +169,10 @@ keyboard.render();
 const addKeyDownEventHandler = function () {
   document.addEventListener('keydown', (event) => {
     keyboard.renderPressedKey(event.code, event.shiftKey);
-    keyboard.toggleKeyActiveStatus(event.code);
+    keyboard.hightlightKey(event.code);
+    if (event.code === 'CapsLock') {
+      keyboard.switchCapsLock();
+    }
     if (event.altKey && event.ctrlKey) {
       keyboard.switchlanguage();
     }
@@ -166,13 +183,17 @@ const addKeyDownEventHandler = function () {
 };
 
 const mouseClickEventHandler = function (event) {
+  if (!event.target.classList.contains('key')) {
+    return;
+  }
   let keyCode = event.target.classList[1];
-    keyboard.renderPressedKey(keyCode, event.shiftKey);
-    keyboard.toggleKeyActiveStatus(keyCode);
+  keyboard.renderPressedKey(keyCode, event.shiftKey);
+  keyboard.hightlightKey(keyCode);
 }
 
 const addMouseClickEventHandler = function () {
-  keyboard.getKeyboardElement().addEventListener('click', mouseClickEventHandler);
+ // keyboard.getKeyboardElement()
+  document.addEventListener('click', mouseClickEventHandler);
 }
 
 window.onload = function () {
